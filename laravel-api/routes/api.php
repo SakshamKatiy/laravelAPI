@@ -20,3 +20,17 @@ Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
 
 Route::post('create-user',[UserController::class,'createUser']);
 Route::get('get-user',[UserController::class,'getUser']);
+Route::get('get-user-details/{id}',[UserController::class,'getUserDetails']);
+Route::put('user-update/{id}',[UserController::class,'updateUser']);
+Route::delete('user-delete/{id}',[UserController::class,'deleteUser']);
+
+Route::post('login',[UserController::class,'login']);
+Route::get('unauthenticate',[UserController::class,'login'])->name('unauthenticate');
+
+// secure routes with auth middleware
+Route::middleware('auth:api')->group(function(){
+    Route::get('get-user',[UserController::class,'getUser']);
+    Route::get('get-user-details/{id}',[UserController::class,'getUserDetails']);
+    Route::post('logout',[UserController::class,'logout']);
+
+});

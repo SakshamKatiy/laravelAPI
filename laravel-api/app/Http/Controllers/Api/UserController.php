@@ -12,7 +12,7 @@ class UserController extends Controller
     public function createUser(Request $request){
         $validator = Validator::make($request->all(),[
 'name'=>'required|string',
-'email'=>'required|string',
+'email'=>'required|string|unique:users',
 'phone_number'=>'required|numeric',
 'password'=>'required|min:6'
         ]);
@@ -37,5 +37,12 @@ return response()->json($result,400);
         }
         return response()->json($result,$responseCode);
 
+    }
+
+    public function getUser(){
+$users = User::all();
+$result = array('status'=>true,'message'=>count($users). "user(s) fetched ",'data'=>$users);
+$responseCode = 200;
+return response()->json($result,$responseCode);
     }
 }
